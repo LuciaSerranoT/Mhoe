@@ -1,7 +1,7 @@
 import React from 'react';
 import './Hero.css';
 
-const Hero = () => {
+const Hero = React.memo(() => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -27,6 +27,6 @@ const Hero = () => {
       </div>
     </section>
   );
-};
+});
 
 export default Hero;

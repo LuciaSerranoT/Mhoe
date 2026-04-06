@@ -1,7 +1,7 @@
 import React from 'react';
 import './About.css';
 
-const About = () => {
+const About = React.memo(() => {
   return (
     <section id="sobre-mi" className="about">
       <div className="container">
@@ -41,6 +41,6 @@ const About = () => {
       </div>
     </section>
   );
-};
+});
 
 export default About;
