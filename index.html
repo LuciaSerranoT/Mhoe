@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio profesional de ingeniera informática">
+    <title>Mi Portfolio - Ingeniera Informática</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Sección Hero -->
+    <section id="inicio" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>¡Hola! Soy Ingeniera Informática</h2>
+                <p>Especializada en desarrollo de software y soluciones tecnológicas innovadoras</p>
+                <a href="#contacto" class="btn btn-primary">Ponte en contacto</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Sobre Mí -->
+    <section id="sobre-mi" class="about">
+        <div class="container">
+            <h2 class="section-title">Sobre Mí</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Soy una profesional apasionada por la tecnología con formación sólida en ingeniería informática. Me dedico a crear soluciones de software eficientes y escalables que resuelven problemas reales.</p>
+                    <p>Con experiencia en desarrollo full-stack, análisis de sistemas y gestión de proyectos, siempre busco seguir aprendiendo y enfrentándome a nuevos desafíos tecnológicos.</p>
+                </div>
+                <div class="about-info">
+                    <div class="info-item">
+                        <h3>Experiencia</h3>
+                        <p>+5 años</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>Proyectos</h3>
+                        <p>20+</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>Clientes</h3>
+                        <p>Satisfechos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Habilidades -->
+    <section id="habilidades" class="skills">
+        <div class="container">
+            <h2 class="section-title">Habilidades</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+                    <ul>
+                        <li>HTML5 & CSS3</li>
+                        <li>JavaScript</li>
+                        <li>React</li>
+                        <li>Vue.js</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Backend</h3>
+                    <ul>
+                        <li>Python</li>
+                        <li>Java</li>
+                        <li>Node.js</li>
+                        <li>SQL</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Herramientas</h3>
+                    <ul>
+                        <li>Git & GitHub</li>
+                        <li>Docker</li>
+                        <li>VS Code</li>
+                        <li>Jira</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Metodologías</h3>
+                    <ul>
+                        <li>Agile</li>
+                        <li>Scrum</li>
+                        <li>TDD</li>
+                        <li>Clean Code</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Proyectos -->
+    <section id="proyectos" class="projects">
+        <div class="container">
+            <h2 class="section-title">Proyectos Destacados</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                    <h3>Proyecto 1</h3>
+                    <p>Descripción breve del proyecto. Incluye tecnologías utilizadas y el impacto que tuvo.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">MongoDB</span>
+                    </div>
+                    <a href="#" class="btn btn-secondary">Ver proyecto</a>
+                </div>
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                    <h3>Proyecto 2</h3>
+                    <p>Descripción breve del proyecto. Incluye tecnologías utilizadas y el impacto que tuvo.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Vue.js</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                    </div>
+                    <a href="#" class="btn btn-secondary">Ver proyecto</a>
+                </div>
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                    <h3>Proyecto 3</h3>
+                    <p>Descripción breve del proyecto. Incluye tecnologías utilizadas y el impacto que tuvo.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Java</span>
+                        <span class="tech-tag">Spring Boot</span>
+                        <span class="tech-tag">MySQL</span>
+                    </div>
+                    <a href="#" class="btn btn-secondary">Ver proyecto</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section id="contacto" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contacto</h2>
+            <div class="contact-content">
+                <p>¿Tienes un proyecto en mente? ¡Me encantaría colaborar contigo!</p>
+                <form class="contact-form" action="#" method="POST">
+                    <input type="text" placeholder="Tu nombre" required>
+                    <input type="email" placeholder="Tu email" required>
+                    <textarea placeholder="Tu mensaje" rows="6" required></textarea>
+                    <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+                </form>
+            </div>
+            <div class="contact-info">
+                <h3>O conecta conmigo:</h3>
+                <div class="social-links">
+                    <a href="#" class="social-link">LinkedIn</a>
+                    <a href="#" class="social-link">GitHub</a>
+                    <a href="#" class="social-link">Email</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Mi Portfolio. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

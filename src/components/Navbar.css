@@ -1,0 +1,92 @@
+/* ========================================
+   NAVEGACIÓN
+   ======================================== */
+
+.navbar {
+  background: rgba(10, 12, 24, 0.45);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: var(--transition);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navbar.scrolled {
+  background: rgba(10, 12, 24, 0.7);
+  backdrop-filter: blur(14px);
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+}
+
+.nav-brand h1 {
+  color: var(--color-primary);
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+.nav-menu button {
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+}
+
+.nav-menu button:hover {
+  color: var(--color-primary);
+}
+
+.nav-menu button::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary);
+  transition: var(--transition);
+}
+
+.nav-menu button:hover::after {
+  width: 100%;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .nav-menu {
+    gap: 15px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar .container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .nav-menu {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}
