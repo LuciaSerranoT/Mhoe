@@ -3,171 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio profesional de ingeniera informática">
-    <title>Mi Portfolio - Ingeniera Informática</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate icon" href="/favicon.ico" />
+    <meta name="description" content="Salón de uñas BellaNails: manicura, pedicura y diseños personalizados.">
+    <title>Mhoe Nails- Manicura, belleza y cuidado personal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <canvas id="background-canvas"></canvas>
 
-    <!-- Sección Hero -->
-    <section id="inicio" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h2>¡Hola! Soy Ingeniera Informática</h2>
-                <p>Especializada en desarrollo de software y soluciones tecnológicas innovadoras</p>
-                <a href="#contacto" class="btn btn-primary">Ponte en contacto</a>
+    <header class="site-header">
+        <div class="container header-grid">
+            <div class="brand">
+                <a href="#inicio">Mhoe Nails</a>
+                <p>Arte con alma</p>
             </div>
+            <nav class="main-nav">
+                <a href="#inicio">Inicio</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#galeria">Galería</a>
+                <a href="#precios">Precios</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
         </div>
-    </section>
+    </header>
 
-    <!-- Sección Sobre Mí -->
-    <section id="sobre-mi" class="about">
-        <div class="container">
-            <h2 class="section-title">Sobre Mí</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Soy una profesional apasionada por la tecnología con formación sólida en ingeniería informática. Me dedico a crear soluciones de software eficientes y escalables que resuelven problemas reales.</p>
-                    <p>Con experiencia en desarrollo full-stack, análisis de sistemas y gestión de proyectos, siempre busco seguir aprendiendo y enfrentándome a nuevos desafíos tecnológicos.</p>
-                </div>
-                <div class="about-info">
-                    <div class="info-item">
-                        <h3>Experiencia</h3>
-                        <p>+5 años</p>
-                    </div>
-                    <div class="info-item">
-                        <h3>Proyectos</h3>
-                        <p>20+</p>
-                    </div>
-                    <div class="info-item">
-                        <h3>Clientes</h3>
-                        <p>Satisfechos</p>
-                    </div>
+    <main>
+        <section id="inicio" class="hero">
+            <div class="container hero-content">
+                <span class="eyebrow">Salón de uñas</span>
+                <h1>Arte by EVA TORRES</h1>
+                <p>Diseños exclusivos y personalizados que reflejan tu estilo.</p>
+                <div class="hero-actions">
+                    <a href="#servicios" class="btn btn-primary">Ver servicios</a>
+                    <a href="#contacto" class="btn btn-secondary">Reservas </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Sección Habilidades -->
-    <section id="habilidades" class="skills">
-        <div class="container">
-            <h2 class="section-title">Habilidades</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Frontend</h3>
-                    <ul>
-                        <li>HTML5 & CSS3</li>
-                        <li>JavaScript</li>
-                        <li>React</li>
-                        <li>Vue.js</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3>Backend</h3>
-                    <ul>
-                        <li>Python</li>
-                        <li>Java</li>
-                        <li>Node.js</li>
-                        <li>SQL</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3>Herramientas</h3>
-                    <ul>
-                        <li>Git & GitHub</li>
-                        <li>Docker</li>
-                        <li>VS Code</li>
-                        <li>Jira</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3>Metodologías</h3>
-                    <ul>
-                        <li>Agile</li>
-                        <li>Scrum</li>
-                        <li>TDD</li>
-                        <li>Clean Code</li>
-                    </ul>
+        <section id="servicios" class="section">
+            <div class="container">
+                <h2>Servicios destacados</h2>
+                <div class="cards-grid">
+                    <article class="card">
+                        <h3>Press On</h3>
+                        <p>Uñas reutilizables<p></p>Hechas a medida con diseños exclusivos <p></p>Acabados impecables</p>
+                    </article>
+                    <article class="card">
+                        <h3>Acrigel</h3>
+                        <p>Resistente y de alta duración <p></p>Acabado natural</p><p>Gran comodidad</p>
+                    </article>
+                    <article class="card">
+                        <h3>Semipermanente</h3>
+                        <p>Uñas decoradas a medida: french, degradados, brillo, arte 3D , efecto humo y detalles exclusivos</p>
+                    </article>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Sección Proyectos -->
-    <section id="proyectos" class="projects">
-        <div class="container">
-            <h2 class="section-title">Proyectos Destacados</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
-                    <h3>Proyecto 1</h3>
-                    <p>Descripción breve del proyecto. Incluye tecnologías utilizadas y el impacto que tuvo.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">MongoDB</span>
+        <section id="galeria" class="section light-section">
+            <div class="container">
+                <h2>Galería de trabajos</h2>
+                <div class="gallery-grid">
+    <div class="gallery-grid">
+    <div class="gallery-item">
+        <img src="/fotos/foto1.jpeg" alt="Diseño de uñas 1">
+    </div>
+    <div class="gallery-item">
+        <img src="/fotos/foto2.jpeg" alt="Diseño de uñas 2">
+    </div>
+    
+</div>
+    
+</div>
+            </div>
+        </section>
+
+        <section id="precios" class="section">
+            <div class="container">
+                <h2>Precios</h2>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3>Manicura semipermanente</h3>
+                        <p class="price">20-25€</p>
+                        <ul>
+                            <li>Esmalte semipermanente</li>
+                            <li>Decoración básica</li>
+                            <li>Corte de cutículas</li>
+                           
+                        </ul>
                     </div>
-                    <a href="#" class="btn btn-secondary">Ver proyecto</a>
-                </div>
-                <div class="project-card">
-                    <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
-                    <h3>Proyecto 2</h3>
-                    <p>Descripción breve del proyecto. Incluye tecnologías utilizadas y el impacto que tuvo.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Vue.js</span>
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">PostgreSQL</span>
+                    <div class="pricing-card highlight">
+                        <h3>Set Press-On</h3>
+                        <p class="price">35-50€</p>
+                        <ul>
+                             <li>Uñas press on personalizadas</li>
+                             <li>Diseño a medida</li>
+                             <li>Incluye kit de aplicación</li>
+                            
+                        </ul>
                     </div>
-                    <a href="#" class="btn btn-secondary">Ver proyecto</a>
-                </div>
-                <div class="project-card">
-                    <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
-                    <h3>Proyecto 3</h3>
-                    <p>Descripción breve del proyecto. Incluye tecnologías utilizadas y el impacto que tuvo.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Java</span>
-                        <span class="tech-tag">Spring Boot</span>
-                        <span class="tech-tag">MySQL</span>
+                    <div class="pricing-card">
+                        <h3>Acrigel</h3>
+                        <p class="price">30-40€</p>
+                        <ul>
+                            <li>Construcción en acrigel</li>
+                            <li>Moldeado y limado</li>
+                            <li>Acabado natural o decorado</li>
+                        </ul>
                     </div>
-                    <a href="#" class="btn btn-secondary">Ver proyecto</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Sección Contacto -->
-    <section id="contacto" class="contact">
-        <div class="container">
-            <h2 class="section-title">Contacto</h2>
-            <div class="contact-content">
-                <p>¿Tienes un proyecto en mente? ¡Me encantaría colaborar contigo!</p>
-                <form class="contact-form" action="#" method="POST">
-                    <input type="text" placeholder="Tu nombre" required>
-                    <input type="email" placeholder="Tu email" required>
-                    <textarea placeholder="Tu mensaje" rows="6" required></textarea>
+        <section id="contacto" class="section light-section">
+            <div class="container contact-grid">
+                <div>
+                    <h2>Contacto</h2>
+                    <p>Reserva tu cita por WhatsApp, llamada , instagram o visita nuestro salón en persona.</p>
+                    <ul class="contact-info">
+                        <li><strong>Teléfono:</strong> +34 697 65 79 08</li>
+                        <li><strong>Email:</strong> @gmail</li>
+                        <li><strong>Dirección:</strong> Las Infantas | Jaén</li>
+                    </ul>
+                </div>
+                <form class="contact-form">
+                    <label>
+                        Nombre
+                        <input type="text" name="nombre" placeholder="Tu nombre" required>
+                    </label>
+                    <label>
+                        Email
+                        <input type="email" name="email" placeholder="Tu email" required>
+                    </label>
+                    <label>
+                        Mensaje
+                        <textarea name="mensaje" rows="5" placeholder="¿Qué servicio deseas?" required></textarea>
+                    </label>
                     <button type="submit" class="btn btn-primary">Enviar mensaje</button>
                 </form>
             </div>
-            <div class="contact-info">
-                <h3>O conecta conmigo:</h3>
-                <div class="social-links">
-                    <a href="#" class="social-link">LinkedIn</a>
-                    <a href="#" class="social-link">GitHub</a>
-                    <a href="#" class="social-link">Email</a>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Footer -->
-    <footer class="footer">
+    <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2024 Mi Portfolio. Todos los derechos reservados.</p>
+            <p>© 2026 MhoeNails. Uñas perfectas para cada ocasión.</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script type="module" src="/js/main.js"></script>
 </body>
 </html>
