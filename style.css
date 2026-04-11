@@ -36,6 +36,7 @@ body {
     min-height: 100vh;
 }
 
+/* 🔥 FONDO (SIN TOCAR EN MÓVIL NI OPACIDAD) */
 #background-canvas {
     position: fixed;
     inset: 0;
@@ -67,7 +68,6 @@ button, input, textarea {
 /* HEADER */
 .site-header {
     background: transparent;
-    box-shadow: none;
     padding: 20px 0 0;
     position: fixed;
     top: 0;
@@ -77,8 +77,8 @@ button, input, textarea {
 
 .header-grid {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     gap: 20px;
     padding: 10px 24px;
     border-radius: 24px;
@@ -97,8 +97,8 @@ button, input, textarea {
 
 .brand p {
     font-family: 'Bebas Neue', sans-serif;
-    color: rgb(30, 26, 26);
     font-size: 0.95rem;
+    color: rgb(30, 26, 26);
 }
 
 .main-nav {
@@ -111,18 +111,15 @@ button, input, textarea {
     color: var(--muted);
     text-decoration: none;
     font-weight: 600;
-    transition: color 0.2s ease;
 }
 
-.main-nav a:hover,
-.main-nav a.active {
+.main-nav a:hover {
     color: var(--primary);
 }
 
 /* HERO */
 .hero {
     padding: 170px 0 90px;
-    background: transparent;
 }
 
 .hero-content {
@@ -132,33 +129,20 @@ button, input, textarea {
     padding: 40px 28px;
 }
 
-.eyebrow {
-    font-family: 'Bebas Neue', sans-serif;
-    display: inline-block;
-    margin-bottom: 16px;
-    color: var(--primary-dark);
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-size: 1.5rem;
-}
-
 .hero h1 {
     font-family: 'Akira Expanded', sans-serif;
-    color: rgb(59, 58, 58);
     font-size: clamp(2.75rem, 5vw, 4.5rem);
-    line-height: 1.03;
+    color: rgb(59, 58, 58);
     margin-bottom: 22px;
 }
 
 .hero p {
-    font-family: 'Schibsted Grotesk', sans-serif;
     max-width: 620px;
     margin: 0 auto 32px;
     color: rgb(59, 58, 58);
-    font-size: 1.05rem;
 }
 
-/* SECTIONS */
+/* SECCIONES */
 .section {
     padding: 80px 0;
 }
@@ -177,11 +161,10 @@ button, input, textarea {
 }
 
 /* =========================
-   📱 MOBILE FIX
+   📱 MOBILE SAFE FIX
 ========================= */
 @media (max-width: 620px) {
 
-    /* HEADER */
     .site-header {
         padding: 10px 0 0;
     }
@@ -191,12 +174,6 @@ button, input, textarea {
         border-radius: 16px;
     }
 
-    .main-nav {
-        gap: 14px;
-        font-size: 0.9rem;
-    }
-
-    /* HERO */
     .hero {
         padding: 120px 0 50px;
     }
@@ -205,12 +182,11 @@ button, input, textarea {
         padding: 20px 14px;
     }
 
-    /* SECCIONES */
     .section {
         padding: 45px 0;
     }
 
-    /* GALERÍA HORIZONTAL */
+    /* 🔥 GALERÍA HORIZONTAL */
     .gallery-grid {
         display: flex;
         overflow-x: auto;
@@ -228,10 +204,5 @@ button, input, textarea {
 
     .gallery-grid::-webkit-scrollbar {
         display: none;
-    }
-
-    /* 🔥 FONDO ARREGLADO (SIN BORDES ROSAS) */
-    #background-canvas {
-        opacity: 0.35;
     }
 }
