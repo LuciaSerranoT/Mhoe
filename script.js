@@ -13,15 +13,15 @@ const camera = new THREE.PerspectiveCamera(
   100
 );
 
-// 🔥 DETECTAR MÓVIL
-const isMobile = window.innerWidth < 620;
-
-// 📱 Ajuste de cámara para móvil (evita que el GLB se vea enorme)
-if (isMobile) {
-  camera.position.set(0, 0, 12);
-} else {
-  camera.position.set(0, 0, 10);
+// 🔥 FUNCIÓN CENTRAL DE MOBILE (IMPORTANTE)
+function getIsMobile() {
+  return window.innerWidth < 620;
 }
+
+let isMobile = getIsMobile();
+
+// 📱 cámara inicial
+camera.position.set(0, 0, isMobile ? 12 : 10);
 
 const renderer = new THREE.WebGLRenderer({
   canvas,
@@ -29,13 +29,13 @@ const renderer = new THREE.WebGLRenderer({
   alpha: true
 });
 
-// 🔥 PIXEL RATIO OPTIMIZADO
+// 🔥 PIXEL RATIO FIX
 renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.setClearColor('#bfc3cb', 1);
 
-// Luces generales
+// Luces (igual)
 const ambientLight = new THREE.AmbientLight(0xffffff, 3.2);
 scene.add(ambientLight);
 
@@ -55,7 +55,7 @@ const starLight = new THREE.DirectionalLight(0xffffff, 2.4);
 starLight.position.set(-6, 4, 12);
 scene.add(starLight);
 
-// Material interior letras
+// Materiales (igual)
 const blueBalloonMaterial = new THREE.MeshPhysicalMaterial({
   color: '#28a3a5',
   metalness: 0,
@@ -67,7 +67,6 @@ const blueBalloonMaterial = new THREE.MeshPhysicalMaterial({
   envMapIntensity: 0.9
 });
 
-// Material borde letras
 const lilacBalloonMaterial = new THREE.MeshPhysicalMaterial({
   color: '#ebaad1',
   metalness: 0,
@@ -80,7 +79,6 @@ const lilacBalloonMaterial = new THREE.MeshPhysicalMaterial({
   side: THREE.BackSide
 });
 
-// Material estrellas
 const silverStarMaterial = new THREE.MeshPhysicalMaterial({
   color: '#f7f9fd',
   metalness: 1,
@@ -88,213 +86,76 @@ const silverStarMaterial = new THREE.MeshPhysicalMaterial({
   clearcoat: 1,
   clearcoatRoughness: 0.02,
   envMapIntensity: 2.4,
-  sheen: 0.22,
-  sheenColor: new THREE.Color('#ffffff'),
   emissive: new THREE.Color('#eef3ff'),
   emissiveIntensity: 0.12
 });
 
 let modelGroup = null;
-let targetRotationY = 0;
-let targetRotationX = 0;
-let currentRotationY = 0;
-let currentRotationX = 0;
-
-const floatingStars = [];
 
 const gltfLoader = new GLTFLoader();
 const objLoader = new OBJLoader();
 
+// =====================
 // LETRAS GLB
-gltfLoader.load(
-  '/mhoe.glb',
-  (gltf) => {
-    const originalModel = gltf.scene;
-    modelGroup = new THREE.Group();
+// =====================
+gltfLoader.load('/mhoe.glb', (gltf) => {
 
-    const box = new THREE.Box3().setFromObject(originalModel);
-    const size = new THREE.Vector3();
-    const center = new THREE.Vector3();
+  const originalModel = gltf.scene;
+  modelGroup = new THREE.Group();
 
-    box.getSize(size);
-    box.getCenter(center);
+  const box = new THREE.Box3().setFromObject(originalModel);
+  const size = new THREE.Vector3();
+  const center = new THREE.Vector3();
 
-    originalModel.position.sub(center);
+  box.getSize(size);
+  box.getCenter(center);
 
-    const maxDim = Math.max(size.x, size.y, size.z);
-   const baseScale = 8.5 / maxDim;
+  originalModel.position.sub(center);
 
-// 🔥 reducir modelo en móvil
-const finalScale = isMobile ? baseScale * 0.65 : baseScale;
+  const maxDim = Math.max(size.x, size.y, size.z);
+  const baseScale = 8.5 / maxDim;
 
-originalModel.scale.setScalar(finalScale);
+  // 🔥 ESTO ES LO IMPORTANTE
+  const finalScale = isMobile
+    ? baseScale * 0.45   // 👈 MÁS PEQUEÑO (ANTES ERA 0.65)
+    : baseScale;
 
-    const borderModel = originalModel.clone(true);
+  originalModel.scale.setScalar(finalScale);
 
-    originalModel.traverse((child) => {
-      if (child.isMesh) {
-        if (child.geometry) child.geometry.computeVertexNormals();
-        child.material = blueBalloonMaterial;
-      }
-    });
+  const borderModel = originalModel.clone(true);
 
-    borderModel.traverse((child) => {
-      if (child.isMesh) {
-        if (child.geometry) child.geometry.computeVertexNormals();
-        child.material = lilacBalloonMaterial;
-        child.scale.multiplyScalar(1.04);
-      }
-    });
+  originalModel.traverse((child) => {
+    if (child.isMesh) child.material = blueBalloonMaterial;
+  });
 
-    modelGroup.add(borderModel);
-    modelGroup.add(originalModel);
-    modelGroup.position.y = 0.15;
-
-    scene.add(modelGroup);
-  }
-);
-
-// ESTRELLAS OBJ
-objLoader.load(
-  '/18763_Cushion_Star_starfish_v2.obj',
-  (obj) => {
-    const starTemplate = obj;
-
-    const starBox = new THREE.Box3().setFromObject(starTemplate);
-    const starSize = new THREE.Vector3();
-    const starCenter = new THREE.Vector3();
-
-    starBox.getSize(starSize);
-    starBox.getCenter(starCenter);
-
-    starTemplate.position.sub(starCenter);
-
-    const maxStarDim = Math.max(starSize.x, starSize.y, starSize.z);
-    const normalizedScale = maxStarDim > 0 ? 1.45 / maxStarDim : 1;
-    starTemplate.scale.setScalar(normalizedScale);
-
-    starTemplate.traverse((child) => {
-      if (child.isMesh) child.material = silverStarMaterial;
-    });
-
-    const starCount = isMobile ? 8 : 14; // 🔥 menos estrellas en móvil
-
-    for (let i = 0; i < starCount; i++) {
-      const star = starTemplate.clone(true);
-
-      const x = (Math.random() - 0.5) * 24;
-      const y = (Math.random() - 0.5) * 14;
-      const z = -6 - Math.random() * 10;
-
-      star.position.set(x, y, z);
-      star.scale.multiplyScalar(0.9 + Math.random() * 1.1);
-
-      scene.add(star);
-
-      floatingStars.push({
-        mesh: star,
-        baseX: x,
-        baseY: y,
-        baseZ: z,
-        speed: 0.35 + Math.random() * 0.6,
-        floatAmount: 0.08 + Math.random() * 0.22,
-        driftAmount: 0.04 + Math.random() * 0.12,
-        rotX: (Math.random() - 0.5) * 0.01,
-        rotY: (Math.random() - 0.5) * 0.01,
-        rotZ: (Math.random() - 0.5) * 0.01,
-        offset: Math.random() * Math.PI * 2
-      });
+  borderModel.traverse((child) => {
+    if (child.isMesh) {
+      child.material = lilacBalloonMaterial;
+      child.scale.multiplyScalar(1.04);
     }
-  }
-);
+  });
 
-// Scroll
-window.addEventListener('scroll', () => {
-  const scrollTop = window.scrollY;
-  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-  const scrollProgress = maxScroll > 0 ? scrollTop / maxScroll : 0;
+  modelGroup.add(borderModel);
+  modelGroup.add(originalModel);
 
-  targetRotationY = scrollProgress * Math.PI * 1.8;
-  targetRotationX = -0.12 + scrollProgress * 0.22;
+  modelGroup.position.y = isMobile ? 0 : 0.15;
+
+  scene.add(modelGroup);
 });
 
-// Mouse (solo PC)
-if (!isMobile) {
-  window.addEventListener('mousemove', (event) => {
-    const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-    const mouseY = (event.clientY / window.innerHeight) * 2 - 1;
-
-    targetRotationY += mouseX * 0.002;
-    targetRotationX = mouseY * 0.1;
-  });
-}
-
-const clock = new THREE.Clock();
-
-function animate() {
-  requestAnimationFrame(animate);
-
-  const elapsed = clock.getElapsedTime();
-
-  if (modelGroup) {
-    currentRotationY += (targetRotationY - currentRotationY) * 0.08;
-    currentRotationX += (targetRotationX - currentRotationX) * 0.08;
-
-    modelGroup.rotation.y = currentRotationY;
-    modelGroup.rotation.x = currentRotationX;
-    modelGroup.position.y = Math.sin(elapsed * 1.2) * 0.14;
-  }
-
-  floatingStars.forEach((star) => {
-    star.mesh.position.y =
-      star.baseY + Math.sin(elapsed * star.speed + star.offset) * star.floatAmount;
-
-    star.mesh.position.x =
-      star.baseX + Math.cos(elapsed * star.speed * 0.7 + star.offset) * star.driftAmount;
-  });
-
-  renderer.render(scene, camera);
-}
-
-animate();
-
-// Resize
+// =====================
+// RESIZE FIX REAL
+// =====================
 window.addEventListener('resize', () => {
-  const isMobileNow = window.innerWidth < 620;
+
+  isMobile = getIsMobile();
 
   camera.aspect = window.innerWidth / window.innerHeight;
 
-  camera.position.set(0, 0, isMobileNow ? 12 : 10);
+  camera.position.set(0, 0, isMobile ? 12 : 10);
 
   camera.updateProjectionMatrix();
 
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(isMobileNow ? 1 : Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
 });
-
-// FORMULARIO (igual que tenías)
-const form = document.querySelector('.contact-form');
-
-if (form) {
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const nombre = form.nombre.value.trim();
-    const email = form.email.value.trim();
-    const mensaje = form.mensaje.value.trim();
-
-    if (!nombre || !email || !mensaje) {
-      alert('Por favor, completa todos los campos antes de enviar.');
-      return;
-    }
-
-    const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailValido.test(email)) {
-      alert('Por favor, ingresa un correo electrónico válido.');
-      return;
-    }
-
-    alert('¡Gracias! Tu mensaje se ha enviado correctamente.');
-    form.reset();
-  });
-}
