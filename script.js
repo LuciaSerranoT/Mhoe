@@ -32,7 +32,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.setClearColor('#bfc3cb', 1);
 
-// Luces (igual que antes)
+// Luces
 scene.add(new THREE.AmbientLight(0xffffff, 3.2));
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 2.8);
@@ -46,6 +46,10 @@ scene.add(directionalLight2);
 const pointLight = new THREE.PointLight(0xffffff, 2.6, 60);
 pointLight.position.set(0, 4, 10);
 scene.add(pointLight);
+
+const starLight = new THREE.DirectionalLight(0xffffff, 2.4);
+starLight.position.set(-6, 4, 12);
+scene.add(starLight);
 
 // Materiales
 const blueBalloonMaterial = new THREE.MeshPhysicalMaterial({
@@ -68,9 +72,9 @@ let modelGroup = null;
 const gltfLoader = new GLTFLoader();
 const objLoader = new OBJLoader();
 
-// =====================
-// GLB
-// =====================
+// =========================
+// 🔥 GLB - AUTO FIT REAL
+// =========================
 gltfLoader.load('/mhoe.glb', (gltf) => {
 
   const originalModel = gltf.scene;
@@ -87,14 +91,17 @@ gltfLoader.load('/mhoe.glb', (gltf) => {
 
   const maxDim = Math.max(size.x, size.y, size.z);
 
-  // 🔥 CAMBIO IMPORTANTE REAL
-  let scale;
+  // 🔥 ESTA ES LA CLAVE REAL
+  const cameraDistance = isMobile ? 12 : 10;
+  const fov = camera.fov * (Math.PI / 180);
 
-  if (isMobile) {
-    scale = 0.8 / maxDim;   // 👈 MÁS PEQUEÑO Y VISIBLE
-  } else {
-    scale = 8.5 / maxDim;
-  }
+  // tamaño visible en pantalla (ajustado a cámara)
+  const visibleHeight = 2 * Math.tan(fov / 2) * cameraDistance;
+
+  // factor de relleno de pantalla
+  const targetFill = isMobile ? 0.35 : 0.55;
+
+  const scale = (visibleHeight * targetFill) / maxDim;
 
   originalModel.scale.setScalar(scale);
 
@@ -114,20 +121,22 @@ gltfLoader.load('/mhoe.glb', (gltf) => {
   modelGroup.add(borderModel);
   modelGroup.add(originalModel);
 
-  modelGroup.position.y = isMobile ? -0.5 : 0.15;
+  modelGroup.position.y = isMobile ? -0.6 : 0.15;
 
   scene.add(modelGroup);
 });
 
-// =====================
-// RESIZE FIX REAL
-// =====================
+// =========================
+// RESIZE PERFECTO
+// =========================
 window.addEventListener('resize', () => {
 
   isMobile = getIsMobile();
 
   camera.aspect = window.innerWidth / window.innerHeight;
+
   camera.position.set(0, 0, isMobile ? 12 : 10);
+
   camera.updateProjectionMatrix();
 
   renderer.setSize(window.innerWidth, window.innerHeight);
