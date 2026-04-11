@@ -34,6 +34,7 @@ body {
     position: relative;
     overflow-x: hidden;
     min-height: 100vh;
+    pointer-events: auto;
 }
 
 #background-canvas {
@@ -111,6 +112,8 @@ button, input, textarea {
     text-decoration: none;
     font-weight: 600;
     transition: color 0.2s ease;
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 .main-nav a:hover,
@@ -501,4 +504,20 @@ textarea:focus {
     .brand p {
         font-size: 0.75rem;
     }
+}
+/*que scrolle si clickeo*/
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 140px; /* altura del header */
+}
+
+/* móvil */
+@media (max-width: 620px) {
+    html {
+        scroll-padding-top: 110px;
+    }
+}
+.site-header {
+    z-index: 9999;
+    position: fixed;
 }
