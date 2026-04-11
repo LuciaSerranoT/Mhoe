@@ -13,14 +13,12 @@ const camera = new THREE.PerspectiveCamera(
   100
 );
 
-// 🔥 FUNCIÓN CENTRAL DE MOBILE (IMPORTANTE)
 function getIsMobile() {
   return window.innerWidth < 620;
 }
 
 let isMobile = getIsMobile();
 
-// 📱 cámara inicial
 camera.position.set(0, 0, isMobile ? 12 : 10);
 
 const renderer = new THREE.WebGLRenderer({
@@ -29,15 +27,13 @@ const renderer = new THREE.WebGLRenderer({
   alpha: true
 });
 
-// 🔥 PIXEL RATIO FIX
 renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.setClearColor('#bfc3cb', 1);
 
-// Luces (igual)
-const ambientLight = new THREE.AmbientLight(0xffffff, 3.2);
-scene.add(ambientLight);
+// Luces (igual que antes)
+scene.add(new THREE.AmbientLight(0xffffff, 3.2));
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 2.8);
 directionalLight.position.set(3, 5, 8);
@@ -51,20 +47,12 @@ const pointLight = new THREE.PointLight(0xffffff, 2.6, 60);
 pointLight.position.set(0, 4, 10);
 scene.add(pointLight);
 
-const starLight = new THREE.DirectionalLight(0xffffff, 2.4);
-starLight.position.set(-6, 4, 12);
-scene.add(starLight);
-
-// Materiales (igual)
+// Materiales
 const blueBalloonMaterial = new THREE.MeshPhysicalMaterial({
   color: '#28a3a5',
   metalness: 0,
   roughness: 0.24,
-  clearcoat: 1,
-  clearcoatRoughness: 0.02,
-  sheen: 0.6,
-  sheenColor: new THREE.Color('#d8f8ff'),
-  envMapIntensity: 0.9
+  clearcoat: 1
 });
 
 const lilacBalloonMaterial = new THREE.MeshPhysicalMaterial({
@@ -72,22 +60,7 @@ const lilacBalloonMaterial = new THREE.MeshPhysicalMaterial({
   metalness: 0,
   roughness: 0.28,
   clearcoat: 1,
-  clearcoatRoughness: 0.03,
-  sheen: 0.55,
-  sheenColor: new THREE.Color('#fff0fa'),
-  envMapIntensity: 0.85,
   side: THREE.BackSide
-});
-
-const silverStarMaterial = new THREE.MeshPhysicalMaterial({
-  color: '#f7f9fd',
-  metalness: 1,
-  roughness: 0.08,
-  clearcoat: 1,
-  clearcoatRoughness: 0.02,
-  envMapIntensity: 2.4,
-  emissive: new THREE.Color('#eef3ff'),
-  emissiveIntensity: 0.12
 });
 
 let modelGroup = null;
@@ -96,7 +69,7 @@ const gltfLoader = new GLTFLoader();
 const objLoader = new OBJLoader();
 
 // =====================
-// LETRAS GLB
+// GLB
 // =====================
 gltfLoader.load('/mhoe.glb', (gltf) => {
 
@@ -113,14 +86,17 @@ gltfLoader.load('/mhoe.glb', (gltf) => {
   originalModel.position.sub(center);
 
   const maxDim = Math.max(size.x, size.y, size.z);
-  const baseScale = 8.5 / maxDim;
 
-  // 🔥 ESTO ES LO IMPORTANTE
-  const finalScale = isMobile
-    ? baseScale * 0.45   // 👈 MÁS PEQUEÑO (ANTES ERA 0.65)
-    : baseScale;
+  // 🔥 CAMBIO IMPORTANTE REAL
+  let scale;
 
-  originalModel.scale.setScalar(finalScale);
+  if (isMobile) {
+    scale = 0.8 / maxDim;   // 👈 MÁS PEQUEÑO Y VISIBLE
+  } else {
+    scale = 8.5 / maxDim;
+  }
+
+  originalModel.scale.setScalar(scale);
 
   const borderModel = originalModel.clone(true);
 
@@ -138,7 +114,7 @@ gltfLoader.load('/mhoe.glb', (gltf) => {
   modelGroup.add(borderModel);
   modelGroup.add(originalModel);
 
-  modelGroup.position.y = isMobile ? 0 : 0.15;
+  modelGroup.position.y = isMobile ? -0.5 : 0.15;
 
   scene.add(modelGroup);
 });
@@ -151,9 +127,7 @@ window.addEventListener('resize', () => {
   isMobile = getIsMobile();
 
   camera.aspect = window.innerWidth / window.innerHeight;
-
   camera.position.set(0, 0, isMobile ? 12 : 10);
-
   camera.updateProjectionMatrix();
 
   renderer.setSize(window.innerWidth, window.innerHeight);
