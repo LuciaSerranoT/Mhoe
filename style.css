@@ -199,11 +199,6 @@ button, input, textarea {
     background: transparent;
 }
 
-/* 🔥 AÑADIDO: separación entre hero y servicios */
-#servicios {
-    margin-top: 60px;
-}
-
 .light-section {
     background: transparent;
 }
@@ -265,6 +260,7 @@ button, input, textarea {
 .gallery-item img {
     width: 100%;
     height: 100%;
+    display: block;
     object-fit: cover;
     transition: transform 0.35s ease;
 }
@@ -313,11 +309,13 @@ button, input, textarea {
 .pricing-card li::before {
     content: '•';
     color: var(--primary);
+    display: inline-block;
     width: 20px;
 }
 
 .contact-grid {
     grid-template-columns: minmax(260px, 1fr) minmax(320px, 1fr);
+    align-items: start;
     gap: 24px;
 }
 
@@ -338,24 +336,134 @@ button, input, textarea {
     display: grid;
     gap: 18px;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 label {
     display: grid;
     gap: 10px;
     font-weight: 600;
+    color: var(--text);
 }
 
 input,
 textarea {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 16px;
     padding: 14px 16px;
     background: rgba(255, 255, 255, 0.32);
+    color: var(--text);
+    resize: vertical;
 }
 
-/* 🔥 móvil */
+input:focus,
+textarea:focus {
+    outline: 2px solid rgba(217, 32, 110, 0.22);
+}
+
+.site-footer {
+    padding: 28px 0;
+    text-align: center;
+    color: var(--muted);
+}
+
+@media (max-width: 860px) {
+    .header-grid {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main-nav {
+        justify-content: center;
+    }
+}
+
 @media (max-width: 620px) {
-    #servicios {
-        margin-top: 30px;
+    .hero {
+        padding-top: 150px;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content {
+        padding: 28px 18px;
+    }
+}
+
+/* =========================
+   🔥 MOBILE FIX
+========================= */
+@media (max-width: 620px) {
+
+    .site-header {
+        padding: 10px 0 0;
+    }
+
+    .header-grid {
+        padding: 10px 14px;
+        border-radius: 16px;
+    }
+
+    .brand a {
+        font-size: 1.3rem;
+    }
+
+    .brand p {
+        font-size: 0.8rem;
+    }
+
+    .main-nav {
+        gap: 14px;
+        font-size: 0.9rem;
+    }
+
+    .hero {
+        padding: 120px 0 50px;
+    }
+
+    .hero-content {
+        padding: 20px 14px;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 0.95rem;
+    }
+
+    .section {
+        padding: 45px 0;
+    }
+
+    .section h2 {
+        margin-bottom: 18px;
+    }
+
+    /* ✅ GALERÍA ARREGLADA: 2 IMÁGENES VISIBLES */
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .gallery-item {
+        min-height: 140px;
+    }
+
+    .card,
+    .pricing-card {
+        padding: 20px;
+    }
+
+    .contact-grid {
+        gap: 16px;
     }
 }
