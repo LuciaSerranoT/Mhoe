@@ -476,4 +476,15 @@ textarea:focus {
     .contact-grid {
         gap: 16px;
     }
+
+    
+}
+@media (max-width: 620px) {
+
+    /* 🔥 HACER EL FONDO (canvas) MÁS PEQUEÑO EN MÓVIL */
+    #background-canvas {
+        transform: scale(0.75);
+        transform-origin: center;
+        opacity: 0.7;
+    }
 }
