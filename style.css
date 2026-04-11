@@ -64,8 +64,7 @@ button, input, textarea {
     margin: 0 auto;
 }
 
-/* ---------------- HEADER ---------------- */
-
+/* HEADER */
 .site-header {
     background: transparent;
     box-shadow: none;
@@ -120,8 +119,7 @@ button, input, textarea {
     color: var(--primary);
 }
 
-/* ---------------- HERO ---------------- */
-
+/* HERO */
 .hero {
     padding: 170px 0 90px;
     background: transparent;
@@ -160,14 +158,12 @@ button, input, textarea {
     font-size: 1.05rem;
 }
 
-/* ---------------- SECTIONS ---------------- */
-
+/* SECTIONS */
 .section {
     padding: 80px 0;
 }
 
-/* ---------------- GALERÍA ---------------- */
-
+/* GALERÍA */
 .gallery-grid {
     display: grid;
     gap: 24px;
@@ -180,8 +176,9 @@ button, input, textarea {
     overflow: hidden;
 }
 
-/* ---------------- MOBILE ---------------- */
-
+/* =========================
+   📱 MOBILE FIX
+========================= */
 @media (max-width: 620px) {
 
     /* HEADER */
@@ -233,10 +230,8 @@ button, input, textarea {
         display: none;
     }
 
-    /* 🔥 FONDO MÁS PEQUEÑO EN MÓVIL */
+    /* 🔥 FONDO ARREGLADO (SIN BORDES ROSAS) */
     #background-canvas {
-        transform: scale(0.75);
-        transform-origin: center;
-        opacity: 0.7;
+        opacity: 0.35;
     }
 }
