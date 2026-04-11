@@ -122,8 +122,12 @@ gltfLoader.load(
     originalModel.position.sub(center);
 
     const maxDim = Math.max(size.x, size.y, size.z);
-    const scale = 8.5 / maxDim;
-    originalModel.scale.setScalar(scale);
+   const baseScale = 8.5 / maxDim;
+
+// 🔥 reducir modelo en móvil
+const finalScale = isMobile ? baseScale * 0.65 : baseScale;
+
+originalModel.scale.setScalar(finalScale);
 
     const borderModel = originalModel.clone(true);
 
