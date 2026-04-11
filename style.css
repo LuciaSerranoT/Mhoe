@@ -521,3 +521,27 @@ html {
     z-index: 9999;
     position: fixed;
 }
+@media (max-width: 620px) {
+
+    /* 🔥 GALERÍA tipo scroll horizontal (NO toca PC) */
+    .gallery-grid {
+        display: flex !important;
+        overflow-x: auto;
+        gap: 12px;
+        padding-bottom: 10px;
+
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .gallery-item {
+        flex: 0 0 75%;
+        min-height: 180px;
+        scroll-snap-align: center;
+        border-radius: 20px;
+    }
+
+    .gallery-grid::-webkit-scrollbar {
+        display: none;
+    }
+}
