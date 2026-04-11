@@ -467,3 +467,14 @@ textarea:focus {
         gap: 16px;
     }
 }
+
+#servicios {
+    margin-top: 80px;
+}
+
+/* móvil */
+@media (max-width: 620px) {
+    #servicios {
+        margin-top: 40px;
+    }
+}
