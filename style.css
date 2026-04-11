@@ -398,7 +398,7 @@ textarea:focus {
 }
 
 /* =========================
-   🔥 RESPONSIVE MOBILE FIX
+   🔥 MOBILE FIX
 ========================= */
 @media (max-width: 620px) {
 
@@ -448,24 +448,14 @@ textarea:focus {
         margin-bottom: 18px;
     }
 
-    /* GALERÍA HORIZONTAL */
+    /* ✅ GALERÍA ARREGLADA: 2 IMÁGENES VISIBLES */
     .gallery-grid {
-        display: flex;
-        overflow-x: auto;
-        gap: 14px;
-        padding-bottom: 10px;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
     }
 
     .gallery-item {
-        min-width: 80%;
-        flex: 0 0 auto;
-        scroll-snap-align: center;
-    }
-
-    .gallery-grid::-webkit-scrollbar {
-        display: none;
+        min-height: 140px;
     }
 
     .card,
