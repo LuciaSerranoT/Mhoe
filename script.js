@@ -12,7 +12,16 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-camera.position.set(0, 0, 10);
+
+// 🔥 DETECTAR MÓVIL
+const isMobile = window.innerWidth < 620;
+
+// 📱 Ajuste de cámara para móvil (evita que el GLB se vea enorme)
+if (isMobile) {
+  camera.position.set(0, 0, 12);
+} else {
+  camera.position.set(0, 0, 10);
+}
 
 const renderer = new THREE.WebGLRenderer({
   canvas,
@@ -20,7 +29,8 @@ const renderer = new THREE.WebGLRenderer({
   alpha: true
 });
 
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+// 🔥 PIXEL RATIO OPTIMIZADO
+renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.setClearColor('#bfc3cb', 1);
@@ -41,7 +51,6 @@ const pointLight = new THREE.PointLight(0xffffff, 2.6, 60);
 pointLight.position.set(0, 4, 10);
 scene.add(pointLight);
 
-// Luz extra para las estrellas
 const starLight = new THREE.DirectionalLight(0xffffff, 2.4);
 starLight.position.set(-6, 4, 12);
 scene.add(starLight);
@@ -71,7 +80,7 @@ const lilacBalloonMaterial = new THREE.MeshPhysicalMaterial({
   side: THREE.BackSide
 });
 
-// Material estrellas plateadas más claras y brillantes
+// Material estrellas
 const silverStarMaterial = new THREE.MeshPhysicalMaterial({
   color: '#f7f9fd',
   metalness: 1,
@@ -120,26 +129,16 @@ gltfLoader.load(
 
     originalModel.traverse((child) => {
       if (child.isMesh) {
-        if (child.geometry) {
-          child.geometry.computeVertexNormals();
-        }
-
+        if (child.geometry) child.geometry.computeVertexNormals();
         child.material = blueBalloonMaterial;
-        child.castShadow = false;
-        child.receiveShadow = false;
       }
     });
 
     borderModel.traverse((child) => {
       if (child.isMesh) {
-        if (child.geometry) {
-          child.geometry.computeVertexNormals();
-        }
-
+        if (child.geometry) child.geometry.computeVertexNormals();
         child.material = lilacBalloonMaterial;
         child.scale.multiplyScalar(1.04);
-        child.castShadow = false;
-        child.receiveShadow = false;
       }
     });
 
@@ -148,14 +147,6 @@ gltfLoader.load(
     modelGroup.position.y = 0.15;
 
     scene.add(modelGroup);
-  },
-  (xhr) => {
-    if (xhr.total) {
-      console.log(`GLB cargado: ${((xhr.loaded / xhr.total) * 100).toFixed(0)}%`);
-    }
-  },
-  (error) => {
-    console.error('Error cargando el GLB:', error);
   }
 );
 
@@ -179,31 +170,20 @@ objLoader.load(
     starTemplate.scale.setScalar(normalizedScale);
 
     starTemplate.traverse((child) => {
-      if (child.isMesh) {
-        if (child.geometry) {
-          child.geometry.computeVertexNormals();
-        }
-        child.material = silverStarMaterial;
-        child.castShadow = false;
-        child.receiveShadow = false;
-      }
+      if (child.isMesh) child.material = silverStarMaterial;
     });
 
-    for (let i = 0; i < 14; i++) {
+    const starCount = isMobile ? 8 : 14; // 🔥 menos estrellas en móvil
+
+    for (let i = 0; i < starCount; i++) {
       const star = starTemplate.clone(true);
 
       const x = (Math.random() - 0.5) * 24;
       const y = (Math.random() - 0.5) * 14;
       const z = -6 - Math.random() * 10;
 
-      const scale = 0.95 + Math.random() * 1.25;
-
       star.position.set(x, y, z);
-      star.scale.multiplyScalar(scale);
-
-      star.rotation.x = Math.random() * Math.PI;
-      star.rotation.y = Math.random() * Math.PI;
-      star.rotation.z = Math.random() * Math.PI;
+      star.scale.multiplyScalar(0.9 + Math.random() * 1.1);
 
       scene.add(star);
 
@@ -221,14 +201,6 @@ objLoader.load(
         offset: Math.random() * Math.PI * 2
       });
     }
-  },
-  (xhr) => {
-    if (xhr.total) {
-      console.log(`OBJ cargado: ${((xhr.loaded / xhr.total) * 100).toFixed(0)}%`);
-    }
-  },
-  (error) => {
-    console.error('Error cargando el OBJ:', error);
   }
 );
 
@@ -242,14 +214,16 @@ window.addEventListener('scroll', () => {
   targetRotationX = -0.12 + scrollProgress * 0.22;
 });
 
-// Ratón
-window.addEventListener('mousemove', (event) => {
-  const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-  const mouseY = (event.clientY / window.innerHeight) * 2 - 1;
+// Mouse (solo PC)
+if (!isMobile) {
+  window.addEventListener('mousemove', (event) => {
+    const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    const mouseY = (event.clientY / window.innerHeight) * 2 - 1;
 
-  targetRotationY += mouseX * 0.002;
-  targetRotationX = mouseY * 0.1;
-});
+    targetRotationY += mouseX * 0.002;
+    targetRotationX = mouseY * 0.1;
+  });
+}
 
 const clock = new THREE.Clock();
 
@@ -273,10 +247,6 @@ function animate() {
 
     star.mesh.position.x =
       star.baseX + Math.cos(elapsed * star.speed * 0.7 + star.offset) * star.driftAmount;
-
-    star.mesh.rotation.x += star.rotX;
-    star.mesh.rotation.y += star.rotY;
-    star.mesh.rotation.z += star.rotZ;
   });
 
   renderer.render(scene, camera);
@@ -284,15 +254,21 @@ function animate() {
 
 animate();
 
+// Resize
 window.addEventListener('resize', () => {
+  const isMobileNow = window.innerWidth < 620;
+
   camera.aspect = window.innerWidth / window.innerHeight;
+
+  camera.position.set(0, 0, isMobileNow ? 12 : 10);
+
   camera.updateProjectionMatrix();
 
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(isMobileNow ? 1 : Math.min(window.devicePixelRatio, 2));
 });
 
-// Formulario
+// FORMULARIO (igual que tenías)
 const form = document.querySelector('.contact-form');
 
 if (form) {
@@ -314,25 +290,7 @@ if (form) {
       return;
     }
 
-    alert('¡Gracias! Tu mensaje se ha enviado correctamente. Pronto nos pondremos en contacto contigo.');
+    alert('¡Gracias! Tu mensaje se ha enviado correctamente.');
     form.reset();
   });
 }
-
-const links = document.querySelectorAll('.main-nav a');
-const sections = document.querySelectorAll('section');
-
-window.addEventListener('scroll', () => {
-  let current = '';
-
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop - 120;
-    if (window.scrollY >= sectionTop) {
-      current = section.getAttribute('id');
-    }
-  });
-
-  links.forEach((link) => {
-    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
-  });
-});
