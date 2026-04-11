@@ -467,7 +467,6 @@ textarea:focus {
         gap: 16px;
     }
 }
-
 .hero {
     min-height: 100vh;
     display: flex;
@@ -477,7 +476,7 @@ textarea:focus {
 /* móvil */
 @media (max-width: 620px) {
     .hero {
-        min-height: 100vh;
+        min-height: 100dvh; /* 👈 ESTA es la clave */
         padding-top: 120px;
         padding-bottom: 60px;
     }
