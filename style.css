@@ -467,14 +467,14 @@ textarea:focus {
         gap: 16px;
     }
 }
-
-#servicios {
-    margin-top: 80px;
+/* 🔥 MÁS ESPACIO ENTRE BOTONES Y SERVICIOS */
+.hero {
+    padding-bottom: 140px;
 }
 
 /* móvil */
 @media (max-width: 620px) {
-    #servicios {
-        margin-top: 40px;
+    .hero {
+        padding-bottom: 100px;
     }
 }
