@@ -77,24 +77,58 @@ const objLoader = new OBJLoader();
 // =========================
 gltfLoader.load('/mhoe.glb', (gltf) => {
 
-  const model = gltf.scene;
+  const root = gltf.scene;
   modelGroup = new THREE.Group();
 
-  model.updateMatrixWorld(true);
+  // 🔥 IMPORTANTE: trabajar sobre el ROOT REAL
+  root.updateMatrixWorld(true);
 
-  // 🔥 limpiar transforms internos (CLAVE)
-  model.traverse((child) => {
+  // centrar
+  const box = new THREE.Box3().setFromObject(root);
+  const size = new THREE.Vector3();
+  const center = new THREE.Vector3();
 
+  box.getSize(size);
+  box.getCenter(center);
+
+  root.position.sub(center);
+
+  const maxDim = Math.max(size.x, size.y, size.z);
+
+  // 🔥 ESCALA REAL (FORZADA EN ROOT, NO EN HIJOS)
+  const targetSize = isMobile ? 3 : 8.5;
+  const scale = targetSize / maxDim;
+
+  // 🚨 CLAVE ABSOLUTA
+  root.scale.set(scale, scale, scale);
+
+  // materiales
+  root.traverse((child) => {
     if (child.isMesh) {
       child.geometry?.computeVertexNormals();
-      child.castShadow = false;
-      child.receiveShadow = false;
+      child.material = blueBalloonMaterial;
     }
-
-    child.position.set(0, 0, 0);
-    child.rotation.set(0, 0, 0);
-    child.scale.set(1, 1, 1);
   });
+
+  // borde (opcional pero seguro)
+  const border = root.clone(true);
+
+  border.traverse((child) => {
+    if (child.isMesh) {
+      child.material = lilacBalloonMaterial;
+      child.scale.multiplyScalar(1.04);
+    }
+  });
+
+  modelGroup.add(border);
+  modelGroup.add(root);
+
+  modelGroup.position.y = isMobile ? -0.6 : 0.15;
+
+  scene.add(modelGroup);
+
+  console.log("🔥 ROOT SCALE aplicado:", scale);
+});
 
   const box = new THREE.Box3().setFromObject(model);
   const size = new THREE.Vector3();
